@@ -9,6 +9,41 @@ const CITIES={
 "Mexico":["Guadalajara","Mexico City","Monterrey"]
 };
 function pick(arr){return arr[Math.floor(Math.random()*arr.length)];}
+function shuffle(array){
+ const a=array.slice();
+ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+ return a;
+}
+// No city repeats within a complete 11-city cycle. Countries are interleaved
+// where possible, and gender counts are balanced within each country.
+let cityBag=[];
+let lastLocation=null;
+let lastFirst=null;
+let lastSurname=null;
+const gendersUsed=Object.fromEntries(Object.keys(POOLS).map(country=>[country,{Male:0,Female:0}]));
+function nextLocation(){
+ if(!cityBag.length) cityBag=shuffle(Object.entries(CITIES).flatMap(([country,cities])=>cities.map(city=>({country,city}))));
+ const alternatives=cityBag.filter(p=>p.country!==lastLocation?.country && p.city!==lastLocation?.city);
+ const cityAlternatives=cityBag.filter(p=>p.city!==lastLocation?.city);
+ const pool=alternatives.length?alternatives:cityAlternatives.length?cityAlternatives:cityBag;
+ // Favor countries with more cities still in the bag, so every country and
+ // every city receives close to proportional exposure at any point in a cycle.
+ const weights=pool.map(p=>cityBag.filter(x=>x.country===p.country).length);
+ let n=Math.random()*weights.reduce((a,b)=>a+b,0), selected=pool[pool.length-1];
+ for(let i=0;i<pool.length;i++){n-=weights[i];if(n<=0){selected=pool[i];break;}}
+ cityBag.splice(cityBag.indexOf(selected),1);
+ lastLocation=selected;
+ return selected;
+}
+function chooseGender(country){
+ const count=gendersUsed[country];
+ let gender;
+ if(count.Male<count.Female)gender='Male';
+ else if(count.Female<count.Male)gender='Female';
+ else gender=pick(['Male','Female']);
+ count[gender]++;
+ return gender;
+}
 function choosePlace(kind,value){
  const picker=document.querySelector('.creator-shell .place-picker[data-picker="'+kind+'"]');
  const choice=Array.from(picker?.querySelectorAll('.place-option')||[]).find(option=>option.dataset.value===value);
@@ -19,12 +54,14 @@ function randomize(event){
  const form=document.getElementById('create-form');
  if(!form)return;
  const button=event.currentTarget;
- const gender=pick(["Male","Female"]);
- const country=pick(Object.keys(POOLS));
- const city=pick(CITIES[country]);
+ const {country,city}=nextLocation();
+ const gender=chooseGender(country);
  const names=POOLS[country];
- const firstName=pick(names[gender]);
- const lastName=pick(names.surnames);
+ const availableFirst=names[gender].filter(n=>n!==lastFirst);
+ const availableLast=names.surnames.filter(n=>n!==lastSurname);
+ const firstName=pick(availableFirst.length?availableFirst:names[gender]);
+ const lastName=pick(availableLast.length?availableLast:names.surnames);
+ lastFirst=firstName;lastSurname=lastName;
  const radio=form.querySelector('input[name="gender"][value="'+gender+'"]');
  if(radio){radio.checked=true;radio.dispatchEvent(new Event('change',{bubbles:true}));}
  choosePlace('country',country);
@@ -48,7 +85,7 @@ function install(){
  button.className='creator-shuffle';
  button.setAttribute('aria-label','Randomize gender, country, city and name');
  button.title='Randomize character';
- button.innerHTML='<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7v5h-5"/><path d="M4 17v-5h5"/><path d="M5.8 9A7 7 0 0 1 18 6l2 6M4 12l2 6a7 7 0 0 0 12.2-3"/></svg>';
+ button.innerHTML='<span class="shuffle-glyph" aria-hidden="true">↻</span>';
  button.addEventListener('click',randomize);
  card.appendChild(button);
 }
