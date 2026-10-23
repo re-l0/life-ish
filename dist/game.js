@@ -1,7 +1,7 @@
 "use strict";
 var Model;
 (function (Model) {
-    Model.statKeys = ['health', 'happiness', 'intelligence', 'reputation'];
+    Model.statKeys = ['health', 'happiness', 'intelligence', 'looks'];
 })(Model || (Model = {}));
 var ScenarioData;
 (function (ScenarioData) {
@@ -11,7 +11,7 @@ var ScenarioData;
             title: 'The Bedtime Negotiations',
             story: 'The adults insist that 7:30 p.m. is a reasonable bedtime. You have no concept of time, but you know tyranny when you see it.',
             choices: [
-                { label: 'Launch a full-scale protest.', outcome: 'The protest is loud, disorganized, and technically successful. You stay up twelve extra minutes.', effects: { happiness: 6, health: -3, reputation: -2 } },
+                { label: 'Launch a full-scale protest.', outcome: 'The protest is loud, disorganized, and technically successful. You stay up twelve extra minutes.', effects: { happiness: 6, health: -3, looks: -2 } },
                 { label: 'Sleep. Plot your revenge tomorrow.', outcome: 'Eight uninterrupted hours. Your enemies never see it coming.', effects: { health: 6, intelligence: 2 } },
                 { label: 'Demand a bedtime story with better writing.', outcome: 'An exhausted parent improvises an allegory about tax fraud. You are captivated.', effects: { intelligence: 5, happiness: 2 } }
             ]
@@ -21,9 +21,9 @@ var ScenarioData;
             title: 'An Artist Is Born',
             story: 'You discover crayons and a suspiciously empty living-room wall. Your first exhibition is met with divided critical opinion.',
             choices: [
-                { label: 'Sign the wall. Own your vision.', outcome: 'Nobody understands the piece, but the signature is unmistakable. A difficult genius is born.', effects: { happiness: 6, reputation: -4, intelligence: 2 } },
-                { label: 'Blame the family dog.', outcome: 'The dog takes the fall. Your conscience develops a small, expensive crack.', effects: { intelligence: 4, reputation: -3 } },
-                { label: 'Help clean it up.', outcome: 'Your artistic era ends after fourteen minutes. The grown-ups look relieved.', effects: { reputation: 6, happiness: -2 } }
+                { label: 'Sign the wall. Own your vision.', outcome: 'Nobody understands the piece, but the signature is unmistakable. A difficult genius is born.', effects: { happiness: 6, looks: -4, intelligence: 2 } },
+                { label: 'Blame the family dog.', outcome: 'The dog takes the fall. Your conscience develops a small, expensive crack.', effects: { intelligence: 4, looks: -3 } },
+                { label: 'Help clean it up.', outcome: 'Your artistic era ends after fourteen minutes. The grown-ups look relieved.', effects: { looks: 6, happiness: -2 } }
             ]
         },
         {
@@ -31,8 +31,8 @@ var ScenarioData;
             title: 'The Playground Economy',
             story: 'Someone is selling "rare" pebbles near the swings. You recognize an emerging market with absolutely no regulation.',
             choices: [
-                { label: 'Start a competing pebble business.', outcome: 'You corner the lunchtime geology market. The revenue is real; the business model is not.', effects: { money: 25, intelligence: 3, reputation: 3 } },
-                { label: 'Expose the entire operation.', outcome: 'The teacher calls you "principled." The other children call you something less flattering.', effects: { reputation: -4, intelligence: 5 } },
+                { label: 'Start a competing pebble business.', outcome: 'You corner the lunchtime geology market. The revenue is real; the business model is not.', effects: { money: 25, intelligence: 3, looks: 3 } },
+                { label: 'Expose the entire operation.', outcome: 'The teacher calls you "principled." The other children call you something less flattering.', effects: { looks: -4, intelligence: 5 } },
                 { label: 'Buy the nicest pebble for your collection.', outcome: 'It is, in fairness, an excellent pebble.', effects: { money: -5, happiness: 7 } }
             ]
         },
@@ -41,9 +41,9 @@ var ScenarioData;
             title: 'Picture Day: A Tragedy',
             story: 'It is school picture day. Your hair has made an independent decision, and the photographer has the compassion of a parking meter.',
             choices: [
-                { label: 'Commit to the worst possible expression.', outcome: 'The photo becomes a family heirloom and a permanent source of blackmail.', effects: { happiness: 6, reputation: -3 } },
-                { label: 'Attempt a sophisticated smile.', outcome: 'You look like a tiny insurance executive. Your relatives are inexplicably proud.', effects: { reputation: 5, happiness: -2 } },
-                { label: 'Negotiate for creative control.', outcome: 'The photographer respects your audacity, if not your artistic direction.', effects: { intelligence: 3, reputation: 3 } }
+                { label: 'Commit to the worst possible expression.', outcome: 'The photo becomes a family heirloom and a permanent source of blackmail.', effects: { happiness: 6, looks: -3 } },
+                { label: 'Attempt a sophisticated smile.', outcome: 'You look like a tiny insurance executive. Your relatives are inexplicably proud.', effects: { looks: 5, happiness: -2 } },
+                { label: 'Negotiate for creative control.', outcome: 'The photographer respects your audacity, if not your artistic direction.', effects: { intelligence: 3, looks: 3 } }
             ]
         },
         {
@@ -51,8 +51,8 @@ var ScenarioData;
             title: 'The Class Pet Has Escaped',
             story: 'The classroom hamster is missing. A child claims it has "returned to the wild," which is a bold description of the cafeteria.',
             choices: [
-                { label: 'Organize a serious search party.', outcome: 'The hamster is found behind a vending machine. Your command skills worry the teacher.', effects: { reputation: 6, intelligence: 3 } },
-                { label: 'Make missing-hamster posters.', outcome: 'Your posters are excellent. The hamster cannot read them, but morale improves.', effects: { happiness: 5, reputation: 3 } },
+                { label: 'Organize a serious search party.', outcome: 'The hamster is found behind a vending machine. Your command skills worry the teacher.', effects: { looks: 6, intelligence: 3 } },
+                { label: 'Make missing-hamster posters.', outcome: 'Your posters are excellent. The hamster cannot read them, but morale improves.', effects: { happiness: 5, looks: 3 } },
                 { label: 'Let the hamster pursue its dreams.', outcome: 'It returns on its own, carrying a french fry. You both learned something.', effects: { intelligence: 4, happiness: 2 } }
             ]
         },
@@ -61,8 +61,8 @@ var ScenarioData;
             title: 'The Group Chat Tribunal',
             story: 'A private screenshot has reached the wrong group chat. Seven people are typing, and none of them are being reasonable.',
             choices: [
-                { label: 'Apologize without a Notes-app statement.', outcome: 'The drama passes faster than anyone expected. This is considered radical maturity.', effects: { reputation: 7, intelligence: 3 } },
-                { label: 'Post an elaborate clarification thread.', outcome: 'Your explanation has fourteen parts. It becomes the second scandal.', effects: { reputation: -9, happiness: -4 } },
+                { label: 'Apologize without a Notes-app statement.', outcome: 'The drama passes faster than anyone expected. This is considered radical maturity.', effects: { looks: 7, intelligence: 3 } },
+                { label: 'Post an elaborate clarification thread.', outcome: 'Your explanation has fourteen parts. It becomes the second scandal.', effects: { looks: -9, happiness: -4 } },
                 { label: 'Put your phone down and go outside.', outcome: 'The sunlight is alarming at first. You eventually remember how grass works.', effects: { health: 5, happiness: 6 } }
             ]
         },
@@ -71,9 +71,9 @@ var ScenarioData;
             title: 'Fifteen Minutes of Internet Fame',
             story: 'A video of you falling off a cafeteria chair has 200,000 views. Half the comments call you an icon. The rest are worse.',
             choices: [
-                { label: 'Become the meme. Own the meme.', outcome: 'You release merch nobody asked for. Against all odds, some of it sells.', effects: { money: 90, reputation: 7, happiness: -3 } },
-                { label: 'Ask politely for the video to come down.', outcome: 'The original disappears. A dozen reposts remain. At least you tried.', effects: { reputation: 3, happiness: 4 } },
-                { label: 'Create a more embarrassing sequel.', outcome: 'The algorithm applauds. Your future self will not.', effects: { reputation: -5, happiness: 7, health: -2 } }
+                { label: 'Become the meme. Own the meme.', outcome: 'You release merch nobody asked for. Against all odds, some of it sells.', effects: { money: 90, looks: 7, happiness: -3 } },
+                { label: 'Ask politely for the video to come down.', outcome: 'The original disappears. A dozen reposts remain. At least you tried.', effects: { looks: 3, happiness: 4 } },
+                { label: 'Create a more embarrassing sequel.', outcome: 'The algorithm applauds. Your future self will not.', effects: { looks: -5, happiness: 7, health: -2 } }
             ]
         },
         {
@@ -81,9 +81,9 @@ var ScenarioData;
             title: 'The Limited-Edition Shoe Prophecy',
             story: 'Everyone swears a pair of neon sneakers is about to "change the culture." They look like expensive traffic cones.',
             choices: [
-                { label: 'Buy the hype. Buy the shoes.', outcome: 'They hurt your feet, but strangers briefly acknowledge your existence.', effects: { money: -80, reputation: 7, health: -2 }, requiresMoney: 80 },
+                { label: 'Buy the hype. Buy the shoes.', outcome: 'They hurt your feet, but strangers briefly acknowledge your existence.', effects: { money: -80, looks: 7, health: -2 }, requiresMoney: 80 },
                 { label: 'Wear what you already own.', outcome: 'Your bank account survives. Your shoes continue doing their one actual job.', effects: { intelligence: 5, happiness: 3 } },
-                { label: 'Design an even uglier pair as a joke.', outcome: 'A local shop offers you $60 for the idea. Satire loses another battle.', effects: { money: 60, happiness: 5, reputation: 2 } }
+                { label: 'Design an even uglier pair as a joke.', outcome: 'A local shop offers you $60 for the idea. Satire loses another battle.', effects: { money: 60, happiness: 5, looks: 2 } }
             ]
         },
         {
@@ -93,7 +93,7 @@ var ScenarioData;
             choices: [
                 { label: 'Invest $500. What could possibly go wrong?', outcome: 'The wealth circle becomes a wealth spiral. Your $500 is now a motivational podcast.', effects: { money: -500, intelligence: 4, happiness: -8 }, requiresMoney: 500 },
                 { label: 'Ignore him. You have seen this documentary.', outcome: 'Six weeks later his account goes private. Your skepticism ages beautifully.', effects: { intelligence: 7, happiness: 3 } },
-                { label: 'Ask to rent the Lamborghini for photos.', outcome: 'He does not find this funny. You find it extremely funny.', effects: { happiness: 8, reputation: -2 } }
+                { label: 'Ask to rent the Lamborghini for photos.', outcome: 'He does not find this funny. You find it extremely funny.', effects: { happiness: 8, looks: -2 } }
             ]
         },
         {
@@ -102,18 +102,18 @@ var ScenarioData;
             story: 'A listing advertises an "open-concept sleeping suite." In person, it is a couch next to the refrigerator. The broker calls it intentional.',
             choices: [
                 { label: 'Pay $150 for the privilege of the couch.', outcome: 'The fridge hums you to sleep. At least breakfast is a short commute.', effects: { money: -150, happiness: -5, health: -2 }, requiresMoney: 150 },
-                { label: 'Walk out with your dignity.', outcome: 'You return to your existing situation, newly grateful for walls.', effects: { happiness: 5, reputation: 2 } },
-                { label: 'Counteroffer with $30 and a harsh review.', outcome: 'The broker blocks your number. The review gets eleven likes.', effects: { money: -30, reputation: 4, happiness: 3 }, requiresMoney: 30 }
+                { label: 'Walk out with your dignity.', outcome: 'You return to your existing situation, newly grateful for walls.', effects: { happiness: 5, looks: 2 } },
+                { label: 'Counteroffer with $30 and a harsh review.', outcome: 'The broker blocks your number. The review gets eleven likes.', effects: { money: -30, looks: 4, happiness: 3 }, requiresMoney: 30 }
             ]
         },
         {
             id: 'networking', minAge: 18, maxAge: 35, icon: 'handshake', category: 'ADULTING',
             title: 'A Room Full of Important People',
             story: 'You stumble into a networking event where everyone is a founder, a visionary, or "between ventures." The sparkling water costs $9.',
-            minStats: { reputation: 30 },
+            minStats: { looks: 30 },
             choices: [
-                { label: 'Introduce yourself as a "disruption consultant."', outcome: 'Three people ask for your business card. You do not have one. Nobody notices.', effects: { reputation: 7, intelligence: -2 } },
-                { label: 'Have one genuine conversation.', outcome: 'You meet someone interesting. Neither of you mentions synergy.', effects: { happiness: 6, reputation: 4 } },
+                { label: 'Introduce yourself as a "disruption consultant."', outcome: 'Three people ask for your business card. You do not have one. Nobody notices.', effects: { looks: 7, intelligence: -2 } },
+                { label: 'Have one genuine conversation.', outcome: 'You meet someone interesting. Neither of you mentions synergy.', effects: { happiness: 6, looks: 4 } },
                 { label: 'Take the complimentary snacks and leave.', outcome: 'A tactical victory. For once, an event delivers measurable value.', effects: { health: 2, happiness: 7 } }
             ]
         },
@@ -122,9 +122,9 @@ var ScenarioData;
             title: 'Mandatory Optional Happiness',
             story: 'A corporate mailing list invites you to a "mandatory-optional" happiness webinar. The presenter begins by explaining the concept of joy in forty-seven slides.',
             choices: [
-                { label: 'Attend and ask difficult questions.', outcome: 'You are removed from the webinar after asking whether happiness has paid time off.', effects: { intelligence: 5, reputation: -3, happiness: 4 } },
-                { label: 'Pretend your connection failed.', outcome: 'Your internet has never served you better. You spend the hour doing literally anything else.', effects: { happiness: 7, reputation: -1 } },
-                { label: 'Become the most enthusiastic participant.', outcome: 'You receive a digital badge. It has no tangible value and somehow weighs on your soul.', effects: { reputation: 6, happiness: -5 } }
+                { label: 'Attend and ask difficult questions.', outcome: 'You are removed from the webinar after asking whether happiness has paid time off.', effects: { intelligence: 5, looks: -3, happiness: 4 } },
+                { label: 'Pretend your connection failed.', outcome: 'Your internet has never served you better. You spend the hour doing literally anything else.', effects: { happiness: 7, looks: -1 } },
+                { label: 'Become the most enthusiastic participant.', outcome: 'You receive a digital badge. It has no tangible value and somehow weighs on your soul.', effects: { looks: 6, happiness: -5 } }
             ]
         },
         {
@@ -132,9 +132,9 @@ var ScenarioData;
             title: 'The Neighborhood Emergency',
             story: 'A neighborhood group has posted 83 messages about an "unknown suspicious object" on the sidewalk. It is a zucchini.',
             choices: [
-                { label: 'Calm the group with some facts.', outcome: 'You identify the vegetable. Several neighbors accuse you of being in on it.', effects: { intelligence: 4, reputation: -3 } },
-                { label: 'Join the investigation dramatically.', outcome: 'You are promoted to head of produce surveillance. The power immediately goes to your head.', effects: { reputation: 6, happiness: 3 } },
-                { label: 'Make zucchini bread and end the debate.', outcome: 'The bread is good enough to restore public order. Peace is fragile but delicious.', effects: { reputation: 8, happiness: 5, health: 2 } }
+                { label: 'Calm the group with some facts.', outcome: 'You identify the vegetable. Several neighbors accuse you of being in on it.', effects: { intelligence: 4, looks: -3 } },
+                { label: 'Join the investigation dramatically.', outcome: 'You are promoted to head of produce surveillance. The power immediately goes to your head.', effects: { looks: 6, happiness: 3 } },
+                { label: 'Make zucchini bread and end the debate.', outcome: 'The bread is good enough to restore public order. Peace is fragile but delicious.', effects: { looks: 8, happiness: 5, health: 2 } }
             ]
         },
         {
@@ -142,8 +142,8 @@ var ScenarioData;
             title: 'The Committee Has Spoken',
             story: 'The local community committee has banned loud socks, "aggressive gardening," and any discussion of the thermostat. A rebellion is forming.',
             choices: [
-                { label: 'Lead the resistance in fluorescent socks.', outcome: 'Your speech at the community hall receives a standing ovation and one noise complaint.', effects: { happiness: 8, reputation: 5, health: -2 } },
-                { label: 'Run for committee president.', outcome: 'You win unopposed. Your first act is to abolish the committee. History will be confused.', effects: { reputation: 9, intelligence: 4 } },
+                { label: 'Lead the resistance in fluorescent socks.', outcome: 'Your speech at the community hall receives a standing ovation and one noise complaint.', effects: { happiness: 8, looks: 5, health: -2 } },
+                { label: 'Run for committee president.', outcome: 'You win unopposed. Your first act is to abolish the committee. History will be confused.', effects: { looks: 9, intelligence: 4 } },
                 { label: 'Watch the chaos over a cup of tea.', outcome: 'Everyone else argues about sock policy. Your afternoon remains magnificent.', effects: { health: 5, happiness: 6 } }
             ]
         },
@@ -154,7 +154,7 @@ var ScenarioData;
             choices: [
                 { label: 'Order it for $200. Science probably.', outcome: 'It is a vibrating footrest with a laser pointer. Your cat loves it; you feel foolish.', effects: { money: -200, happiness: -4, health: 1 }, requiresMoney: 200 },
                 { label: 'Take a walk instead.', outcome: 'The air is fresh, your legs still work, and no subscription is required.', effects: { health: 6, happiness: 5 } },
-                { label: 'Write a brutally honest product review.', outcome: 'Your review goes mildly viral among retirees. You become a reluctant consumer advocate.', effects: { reputation: 6, intelligence: 3 } }
+                { label: 'Write a brutally honest product review.', outcome: 'Your review goes mildly viral among retirees. You become a reluctant consumer advocate.', effects: { looks: 6, intelligence: 3 } }
             ]
         }
     ];
@@ -219,6 +219,9 @@ var Engine;
                     c.gender = 'Female';
                 c.age = Engine.clamp(c.age, 0, 120);
                 c.money = Math.max(0, Number(c.money) || 0);
+                // Migrate existing beta saves: the fourth stat is now Looks.
+                if (!Number.isFinite(Number(c.stats.looks))) c.stats.looks = Number.isFinite(Number(c.stats.reputation)) ? Number(c.stats.reputation) : 50;
+                delete c.stats.reputation;
                 Model.statKeys.forEach(k => c.stats[k] = Engine.clamp(Number(c.stats[k])));
             }
             if (loaded.activeScenarioId && !ScenarioData.byId(loaded.activeScenarioId))
@@ -249,7 +252,7 @@ var Engine;
         const birthday = randomBirthday();
         const c = {
             firstName: first, lastName: last, city, country: getCountry(input.country).name, gender: input.gender, birthday,
-            age: 0, money: 0, stats: { health: 86, happiness: 74, intelligence: 56, reputation: 50 }
+            age: 0, money: 0, stats: { health: 86, happiness: 74, intelligence: 56, looks: 50 }
         };
         const jokes = [
             'My parents seem reasonably prepared. This illusion will not last.',
@@ -358,7 +361,7 @@ var Engine;
             health: 'You spent a surprising amount of time in decent shape. Your body may have been your most sensible investment.',
             happiness: 'You took the scenic route through chaos and somehow found reasons to laugh along the way.',
             intelligence: 'You asked difficult questions, learned inconvenient answers, and seldom let common sense interrupt the plot.',
-            reputation: 'People had opinions about you. Plenty of them. You left behind a very lively comment section.'
+            looks: 'You had your own unmistakable look, and you carried it through every chapter of your story.'
         };
         if (c.age < 30)
             return 'A short, chaotic run. You managed to make several headlines in a story nobody could predict.';
@@ -417,9 +420,9 @@ var UI;
     function icon(name, size = 20, cls = '') { return `<svg class="icon ${cls}" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[name] || icons.sparkles}</svg>`; }
     function e(value) { return String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
     const fmt = (value) => Engine.money(value);
-    const labelStat = { health: 'Health', happiness: 'Happiness', intelligence: 'Intelligence', reputation: 'Reputation' };
-    const iconStat = { health: 'heart', happiness: 'smile', intelligence: 'brain', reputation: 'sparkles' };
-    const statColor = { health: 'cyan', happiness: 'lime', intelligence: 'violet', reputation: 'coral' };
+    const labelStat = { health: 'Health', happiness: 'Happiness', intelligence: 'Intelligence', looks: 'Looks' };
+    const iconStat = { health: 'heart', happiness: 'smile', intelligence: 'brain', looks: 'sparkles' };
+    const statColor = { health: 'cyan', happiness: 'lime', intelligence: 'violet', looks: 'coral' };
     function logo() { return `<div class="brand"><img class="brand-image" src="assets/life-ish-wordmark.png" alt="Life-ish" /></div>`; }
     function topbar(isGame = false) {
         return `<header class="topbar"><div class="topbar-left"><button class="icon-button menu-trigger" type="button" data-action="menu" aria-label="Open menu">${icon('menu', 23)}</button>${logo()}</div>${isGame ? '<span class="top-edition">a life in progress</span>' : ''}</header>`;
