@@ -1,22 +1,29 @@
 # Life-ish
 
-A satirical, mobile-friendly life simulator.
+**Life-ish** is a satirical browser-based life simulator, developed as an incremental beta.
 
-**Current version:** Beta 0.8.1
+**Play:** https://life-ish.pages.dev/
 
-## Play
+## Publishing
 
-Once GitHub Pages is enabled, play at:
-https://re-l0.github.io/life-ish/
+- Source repository: `re-l0/life-ish` (branch `main`).
+- Hosting: Cloudflare Pages, connected to this GitHub repository. Every commit to `main` triggers a production deployment.
+- Build: static site, framework preset **None**, no build command, output directory `.`.
+- `index.html` links the runtime `dist/game.js`, the primary `styles.css`, creator extras, and the dashboard overhaul files.
 
-## Hosting
+## Current UI architecture
 
-Life-ish is currently a standalone static site. The complete playable build is in `index.html` on the `main` branch. It does not require a backend, external services, or subscriptions.
+- `creator-pools.js`: country-specific first and last names, balanced randomized character creation cycling through all 11 cities.
+- `creator-polish.css`: creator's darker liquid-glass visuals and custom image-backed pickers.
+- `dashboard-overhaul.js`: creator-independent presentation layer for the game dashboard, timeline, character profile, the Lives menu, and stats. This does not change the game engine or saved state.
+- `dashboard-overhaul.css`: dark glass surface and bespoke burgundy Age button (embedded image asset).
+- `assets/`: logo, flag artwork, city backgrounds.
+- `dist/game.js`: core compiled simulator runtime.
 
-To enable GitHub Pages, choose **Settings → Pages → Build and deployment → Deploy from a branch → main / (root)**.
+## Gameplay
 
-The website saves each player's progress locally in that browser. Saves do not synchronize across devices.
+The game saves to browser `localStorage` on each device. The disabled Lives options (Save Life, Lives in Progress, Cemetery) are **visual placeholders**, not implemented cloud saves. Starting a new life replaces the active character as before.
 
-## Development
+## Later priorities
 
-The latest verified offline build includes the Life-ish character creator, selectable birth countries and cities with flag and city photography, age progression, decisions, statistics, finances, and death/restart.
+Finish the occupation/career system, relationship and activity features, multi-life persistence, cemetery, and full character profiles. Keep designs mobile-first and avoid decorative text or nonfunctional controls.
