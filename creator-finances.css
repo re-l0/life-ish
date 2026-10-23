@@ -1,0 +1,56 @@
+/* Life-ish 1.2 — interactive creator and banking surfaces. */
+.creator-shell .life-edit-buttons{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:4px 0 18px}
+.creator-shell .life-edit-option{display:flex;align-items:center;gap:10px;min-height:60px;padding:11px 14px;text-align:left;color:#f5e8f2;font-size:13px;font-weight:620;cursor:pointer;border:1px solid rgba(250,205,238,.36);border-radius:14px;background:linear-gradient(155deg,rgba(255,255,255,.2),rgba(87,54,95,.19) 43%,rgba(29,20,42,.88));box-shadow:inset 0 1px rgba(255,255,255,.35),inset 0 -2px rgba(0,0,0,.16),0 5px 15px rgba(0,0,0,.16)}
+.creator-shell .life-edit-option>span:first-child{font-size:19px;flex:none}
+.creator-shell .life-edit-option small{display:block;color:#c4b5c4;font-weight:450;font-size:10px;padding-top:4px}
+.creator-shell .life-edit-option b{margin-left:auto;font-size:24px;font-weight:350}
+.creator-shell .life-edit-option:hover:not(:disabled){border-color:rgba(255,205,241,.85);box-shadow:inset 0 1px rgba(255,255,255,.44),0 5px 22px rgba(227,87,171,.16)}
+.creator-shell .life-edit-option:disabled{opacity:.43;cursor:not-allowed;filter:saturate(.6)}
+.creator-shell .life-rich-button{margin-top:12px;background:linear-gradient(154deg,#a1b3a5,#517d60 46%,#244e38 88%,#163023);border-color:rgba(188,241,198,.52);color:#11301c;box-shadow:inset 0 2px rgba(252,255,253,.48),inset 0 -3px rgba(6,50,25,.45),0 7px 23px rgba(24,98,51,.17)}
+.creator-shell .life-rich-button .button-icon{border-color:rgba(224,255,226,.52);background:linear-gradient(148deg,rgba(255,255,255,.72),rgba(111,207,144,.5) 51%,rgba(31,109,63,.49));color:#103a21}
+.creator-shell .life-rich-button.is-ready,.creator-shell .life-rich-button:hover{background:linear-gradient(160deg,#e9ffee,#a8f2be 22%,#65d991 52%,#19894e 81%,#116138);border-color:rgba(232,255,228,.97);color:#092f19;box-shadow:inset 0 2px rgba(255,255,255,.82),inset 0 -3px rgba(5,81,36,.37),0 10px 28px rgba(27,157,78,.23),0 0 20px rgba(59,239,121,.15)}
+.creator-shell .life-rich-button.is-ready .button-icon,.creator-shell .life-rich-button:hover .button-icon{background:linear-gradient(145deg,#f8fff8,#abf4be 45%,#339969)}
+body.life-special-open{overflow:hidden}
+.life-special-overlay{position:fixed;z-index:240;inset:0;display:flex;align-items:center;justify-content:center;padding:17px;background:rgba(3,3,10,.77);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);animation:life-special-enter .2s ease-out}
+@keyframes life-special-enter{from{opacity:0}to{opacity:1}}
+.life-special-dialog{color:#faeff9;width:min(100%,460px);max-height:92dvh;overflow-y:auto;position:relative;padding:27px 25px;border-radius:27px;border:1px solid rgba(255,209,243,.39);background:linear-gradient(145deg,rgba(57,35,60,.97),rgba(22,14,33,.99) 42%,rgba(11,11,24,.99));box-shadow:inset 0 1px rgba(255,255,255,.23),0 25px 80px rgba(0,0,0,.74),0 0 30px rgba(214,78,176,.12)}
+.life-special-head{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:25px}
+.life-special-head h2{font-size:23px;letter-spacing:-.025em;margin:0;font-weight:720}
+.life-special-close{width:38px;height:38px;border-radius:12px;border:1px solid rgba(255,255,255,.24);background:linear-gradient(160deg,rgba(255,255,255,.23),rgba(53,33,67,.76));color:#fbe4f3;cursor:pointer;font-size:27px;line-height:1}
+.life-special-close:hover,.life-special-close:focus-visible{border-color:#ffc0e3;box-shadow:0 0 14px rgba(240,95,181,.2)}
+.life-slider-list{display:grid;gap:26px;margin:10px 0 30px}
+.life-slider-row{display:grid;gap:11px}
+.life-slider-row label{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:640}
+.life-slider-face{font-size:24px;width:32px;text-align:center}
+.life-slider-row output{margin-left:auto;min-width:33px;text-align:center;font-size:16px;font-weight:760;color:hsl(var(--h) 96% 67%);text-shadow:0 0 11px hsl(var(--h) 96% 58% / .35)}
+.life-slider-row output.life-perfect{padding:5px 10px;margin:-5px -10px -5px auto;color:#f2fff2;background:linear-gradient(150deg,rgba(176,255,185,.58),rgba(14,128,38,.68));border:1px solid #c8ffce;border-radius:10px;box-shadow:inset 0 1px #fff8,0 0 17px #54f77665}
+.life-slider-row input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:12px;border:1px solid rgba(255,255,255,.19);border-radius:99px;outline:none;cursor:pointer;box-shadow:inset 0 2px 4px #0005;background:linear-gradient(90deg,var(--tint) 0%,var(--tint) var(--fill),rgba(104,92,112,.44) var(--fill),rgba(104,92,112,.44) 100%)}
+.life-slider-row input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:25px;height:25px;border-radius:100%;border:2px solid #fef5ff;background:linear-gradient(140deg,#fff,#e4c1d9 54%,#925e8a);box-shadow:0 3px 11px #0009,0 0 12px var(--tint)}
+.life-slider-row input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:100%;border:2px solid #fef5ff;background:linear-gradient(140deg,#fff,#e4c1d9 54%,#925e8a);box-shadow:0 3px 11px #0009}
+.life-slider-row input[type=range]:focus-visible{outline:3px solid rgba(255,180,221,.66);outline-offset:5px}
+.life-special-save{width:100%;min-height:54px;display:flex;justify-content:space-between;align-items:center;padding:13px 16px;border-radius:15px;border:1px solid rgba(255,226,247,.88);cursor:pointer;background:linear-gradient(164deg,#fff0f8,#f2b2d3 38%,#d44c98 88%);color:#39152b;font-size:16px;font-weight:730;box-shadow:inset 0 2px rgba(255,255,255,.8),inset 0 -3px rgba(113,16,68,.35),0 9px 24px rgba(207,45,137,.19)}
+.life-special-save:hover{box-shadow:inset 0 2px rgba(255,255,255,.85),0 8px 29px rgba(219,58,146,.3)}
+.dashboard-shell .profile-name-button{color:#9abbf6!important;text-decoration:none!important;text-shadow:0 0 13px rgba(90,161,255,.3)}
+.dashboard-shell .profile-name-button[data-gender=Female]{color:#ff9bcd!important;text-shadow:0 0 14px rgba(255,86,170,.26)}
+.dashboard-shell .profile-name-button:hover{filter:brightness(1.23);text-shadow:0 0 18px rgba(156,158,255,.62)}
+.dashboard-shell .life-avatar-button{cursor:pointer}
+.dashboard-shell .life-avatar-button:focus-visible{outline:2px solid #eab5d6;outline-offset:3px;border-radius:14px}
+.dashboard-shell .balance-box[data-life-click=bank-open]{cursor:pointer;border-radius:15px;transition:background .2s}
+.dashboard-shell .balance-box[data-life-click=bank-open]:hover,.dashboard-shell .balance-box[data-life-click=bank-open]:focus-visible{background:rgba(242,141,194,.08);outline:none;filter:drop-shadow(0 0 10px rgba(234,131,194,.22))}
+.dashboard-shell .life-money-status{color:#a9f4c3!important;text-shadow:0 0 10px rgba(66,223,133,.42)}
+.life-zodiac{color:#ffc5e5;text-shadow:0 0 10px rgba(245,71,168,.65);font-size:1.23em;vertical-align:-.06em}
+.dashboard-shell .life-menu-icon{font-family:system-ui,sans-serif;font-size:23px;min-width:32px;text-align:center;line-height:1}
+.life-bank-dialog{width:min(100%,413px)}
+.life-bank-total{display:flex;align-items:center;flex-direction:column;gap:8px;padding:3px 0 27px;border-bottom:1px solid rgba(255,206,240,.19)}
+.life-bank-total>span{font-size:45px}
+.life-bank-total strong{font-size:clamp(29px,7vw,43px);color:#f8e6f5;letter-spacing:-.045em}
+.life-bank-total small{color:#c3b0c2;font-size:13px}
+.life-bank-rows{background:rgba(9,7,19,.37);border:1px solid rgba(255,208,246,.19);border-radius:17px;overflow:hidden;margin-top:24px}
+.life-bank-rows>div{padding:15px 16px;display:flex;align-items:center;justify-content:space-between;gap:15px;border-bottom:1px solid rgba(255,224,248,.1)}
+.life-bank-rows>div:last-child{border:0}
+.life-bank-rows span{color:#c8b5c9;font-size:13px}
+.life-bank-rows b{font-size:14px;color:#f9e8f3;font-variant-numeric:tabular-nums}
+.life-bank-rows b.plus{color:#92eeb2}.life-bank-rows b.minus{color:#ff9ea9}
+.life-bank-note{margin:19px 0 0;text-align:center;font-size:11px;color:#a99aab;line-height:1.5}
+@media(max-width:500px){.creator-shell .life-edit-buttons{gap:9px}.creator-shell .life-edit-option{min-height:59px;padding:9px 10px;font-size:12px;gap:7px}.creator-shell .life-edit-option>span:first-child{font-size:17px}.creator-shell .life-rich-button{font-size:14px;padding-left:13px}.life-special-overlay{padding:13px}.life-special-dialog{padding:22px 19px;border-radius:23px}}
+@media(prefers-reduced-motion:reduce){.life-special-overlay{animation:none}}
