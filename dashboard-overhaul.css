@@ -161,3 +161,7 @@
 @media(prefers-reduced-motion:reduce){
  .dashboard-shell .life-milestone,.dashboard-shell .life-milestone-out{animation:none}
 }
+
+/* Reserve space for the brief notification only while it is visible. */
+.dashboard-shell .life-timeline-header.has-milestone{padding-bottom:49px;transition:padding-bottom .22s ease}
+.dashboard-shell .life-milestone{top:auto;bottom:8px}
