@@ -121,3 +121,91 @@
     }
   });
 })();
+
+/* Life-ish 1.1: Looks UI, portrait dossier, age milestone notifications. */
+(() => {
+  'use strict';
+  const app=document.getElementById('app');
+  if(!app)return;
+  const escapeText=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const labels=['Health','Happiness','Intelligence','Looks'];
+  const emoji={
+    Health:['💀','🤒','🤕','💪','❤️','🦾'],
+    Happiness:['😭','😢','😐','🙂','😄','🤩'],
+    Intelligence:['🪨','😵‍💫','🤔','📚','🧠','🧠'],
+    Looks:['👹','😬','🙂','😎','✨','🔥']
+  };
+  const milestoneTexts={
+    0:['Hello world!','Goo-goo, ga-ga!','Welcome!','Damn it! Another mouth to feed!','Fresh out of the factory!','Maximum potential!'],
+    1:['First steps!','Da-da!','Ma-ma!',"That's one small step for baby...",'Veni, vidi, fell']
+  };
+  const val=x=>Math.max(0,Math.min(100,Number(x)||0));
+  const hue=n=>n<=50?n*1.02:n<=80?51+(n-50)*1.94:109+(n-80)*1.35;
+  function decorateStat(row) {
+    const raw=row.querySelector('.stat-label');
+    if(!raw)return;
+    const name=(raw.querySelector('span:last-child')?.textContent||raw.textContent||'').trim();
+    const label=name==='Reputation'?'Looks':name;
+    if(!labels.includes(label))return;
+    const track=row.querySelector('.progress-track');
+    const n=val(track?.getAttribute('aria-valuenow'));
+    const level=n===100?5:n>=81?4:n>=61?3:n>=41?2:n>=21?1:0;
+    raw.innerHTML='<span class="stat-emoji" aria-hidden="true">'+emoji[label][level]+'</span><span>'+label+'</span>';
+    const number=row.querySelector('.stat-number');
+    if(number){number.textContent=String(Math.round(n));number.style.setProperty('--score-hue',String(hue(n)));number.classList.toggle('is-perfect',n===100);}
+    const bar=row.querySelector('.progress-fill');
+    const h=hue(n);
+    if(bar){bar.style.width=n+'%';bar.style.background='linear-gradient(90deg,hsl('+h+' 86% 32%),hsl('+h+' 92% 52%) 68%,hsl('+h+' 96% 63%))';bar.style.boxShadow='0 0 12px hsl('+h+' 90% 53% / .35)';}
+    if(track){track.setAttribute('aria-label',label);track.setAttribute('aria-valuenow',String(n));}
+  }
+  function updateStats(root){root.querySelectorAll('.stat-row').forEach(decorateStat);}
+  function dockIcons(shell){
+    const rel=shell.querySelector('.dock-item[data-section="Relationships"]');
+    const act=shell.querySelector('.dock-item[data-section="Activities"]');
+    if(rel)rel.innerHTML='<svg class="icon" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"/></svg><span>Relationships</span>';
+    if(act)act.innerHTML='<svg class="icon" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="m12 2.7 2.9 6.1 6.7.9-4.9 4.8 1.2 6.7-5.9-3.1-5.9 3.1 1.2-6.7-4.9-4.8 6.7-.9Z"/></svg><span>Activities</span>';
+  }
+  function dossier(dialog,c){
+    const avatar=dialog.querySelector('.dossier-person .avatar-wrap');
+    if(!avatar)return;
+    const country=Engine.getCountry(c.country);
+    let facts=[['Age',c.age+(c.age===1?' year old':' years old')],['Birthday',Engine.birthdayText(c.birthday)],['Birthplace',c.city+', '+c.country],['Zodiac',Engine.zodiac(c.birthday)],['Bank balance',Engine.money(c.money)],['Life events',Engine.state.history.length]];
+    let html='<div class="profile-dialog-close"><button class="dialog-close" type="button" data-action="close-modal" aria-label="Close character information">×</button></div>';
+    html+='<div class="profile-detail-hero"><div class="profile-detail-avatar">'+avatar.outerHTML+'</div><h2 id="dossier-heading">'+escapeText(Engine.fullName(c))+'</h2><p>'+escapeText(c.gender)+' · '+country.flag+' '+escapeText(country.adjective)+'</p></div>';
+    html+='<div class="profile-detail-facts">'+facts.map(f=>'<div><span>'+escapeText(f[0])+'</span><strong>'+escapeText(f[1])+'</strong></div>').join('')+'</div>';
+    html+='<div class="profile-detail-stats" aria-label="Character statistics">'+['health','happiness','intelligence','looks'].map(k=>{
+      const v=val(c.stats[k]),name=k.charAt(0).toUpperCase()+k.slice(1);
+      return '<div class="stat-row"><div class="stat-info"><span class="stat-label">'+name+'</span><span class="stat-number">'+Math.round(v)+'</span></div><div class="progress-track" role="progressbar" aria-label="'+name+'" aria-valuenow="'+v+'" aria-valuemin="0" aria-valuemax="100"><span class="progress-fill" style="width:'+v+'%"></span></div></div>';
+    }).join('')+'</div>';
+    dialog.innerHTML=html;
+    updateStats(dialog);
+  }
+  let currentLife='',seen=new Set(),fadeTimer=0;
+  function milestone(shell,c){
+    shell.querySelector('.life-chapter-subtitle')?.remove();
+    const header=shell.querySelector('.life-timeline-header');
+    if(!header)return;
+    const key=[c.firstName,c.lastName,c.birthday.month,c.birthday.day,c.country,c.city].join('/');
+    if(key!==currentLife){currentLife=key;seen=new Set();clearTimeout(fadeTimer);}
+    const age=c.age;
+    if(!Object.prototype.hasOwnProperty.call(milestoneTexts,age)||seen.has(age)||Engine.state.activeScenarioId||Engine.state.resolution)return;
+    if(age===1&&!Engine.state.history.some(item=>item.age===1))return;
+    seen.add(age);
+    const toast=document.createElement('div');
+    toast.className='life-milestone';
+    toast.setAttribute('role','status');
+    const options=milestoneTexts[age];
+    toast.textContent=options[Math.floor(Math.random()*options.length)];
+    header.appendChild(toast);
+    fadeTimer=setTimeout(()=>{toast.classList.add('life-milestone-out');setTimeout(()=>toast.remove(),350);},4650);
+  }
+  function update(){
+    const shell=app.querySelector('.dashboard-shell');
+    const c=typeof Engine!=='undefined'&&Engine.state?.character;
+    if(shell&&c){updateStats(shell);dockIcons(shell);milestone(shell,c);}
+    const modal=app.querySelector('.dossier-dialog');
+    if(modal&&c)dossier(modal,c);
+  }
+  new MutationObserver(list=>{if(list.some(item=>item.target===app))update();}).observe(app,{childList:true});
+  update();
+})();
