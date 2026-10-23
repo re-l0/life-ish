@@ -196,8 +196,9 @@
     toast.setAttribute('role','status');
     const options=milestoneTexts[age];
     toast.textContent=options[Math.floor(Math.random()*options.length)];
+    header.classList.add('has-milestone');
     header.appendChild(toast);
-    fadeTimer=setTimeout(()=>{toast.classList.add('life-milestone-out');setTimeout(()=>toast.remove(),350);},4650);
+    fadeTimer=setTimeout(()=>{toast.classList.add('life-milestone-out');setTimeout(()=>{toast.remove();header.classList.remove('has-milestone');},350);},4650);
   }
   function update(){
     const shell=app.querySelector('.dashboard-shell');
